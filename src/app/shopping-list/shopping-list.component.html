@@ -1,6 +1,8 @@
 <div class='row'>
   <div class='col-xs-10'>
-    <app-shopping-edit></app-shopping-edit>
+    <app-shopping-edit
+      (creatIngredient)='onItemAdd($event)'
+    ></app-shopping-edit>
     <hr>
     <ul class='list-group'>
       <a
@@ -8,7 +10,10 @@
         style='cursor: pointer'
         *ngFor='let ingredient of ingredients'
       >
-        {{ ingredient.name }} ({{ ingredient.amount }})
+        <p *ngIf='ingredient else infoText'>{{ ingredient.name }} ({{ ingredient.amount }})</p>
+        <ng-template #infoText>
+          <p>Add ingredient</p>
+        </ng-template>
       </a>
     </ul>
   </div>
