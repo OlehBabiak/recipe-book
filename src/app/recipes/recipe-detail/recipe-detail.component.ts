@@ -8,7 +8,6 @@ import {Recipe} from "../recipe.model";
 })
 export class RecipeDetailComponent implements OnInit {
   @Input() recipeDetail: Recipe
-
   constructor() {
   }
 
