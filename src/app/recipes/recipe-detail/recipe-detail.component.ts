@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Recipe} from "../recipe.model";
 import {RecipeService} from "../../services/recipe.service";
-import {ActivatedRoute, Data} from "@angular/router";
+import {ActivatedRoute, Data, Params} from "@angular/router";
 
 
 @Component({
@@ -10,7 +10,7 @@ import {ActivatedRoute, Data} from "@angular/router";
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit {
-  recipeDetail: Recipe
+  recipeDetail: Recipe;
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute) {
 
