@@ -13,6 +13,7 @@ import {FormsModule} from "@angular/forms";
 import { DropdownDirective } from './shared/dropdown.directive';
 import {RouterLinkWithHref, RouterOutlet} from "@angular/router";
 import {AppRoutingModule} from "./app-routing/app-routing.module";
+import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {AppRoutingModule} from "./app-routing/app-routing.module";
     RecipeItemComponent,
     ShoppingListComponent,
     ShoppingEditComponent,
-    DropdownDirective
+    DropdownDirective,
+    RecipeStartComponent
   ],
   imports: [
     BrowserModule,
