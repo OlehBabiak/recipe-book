@@ -11,6 +11,8 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
 import {FormsModule} from "@angular/forms";
 import { DropdownDirective } from './shared/dropdown.directive';
+import {RouterLinkWithHref, RouterOutlet} from "@angular/router";
+import {AppRoutingModule} from "./app-routing/app-routing.module";
 
 
 @NgModule({
@@ -27,7 +29,10 @@ import { DropdownDirective } from './shared/dropdown.directive';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    RouterOutlet,
+    RouterLinkWithHref,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

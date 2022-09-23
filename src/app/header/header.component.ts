@@ -7,9 +7,5 @@ import {Component, EventEmitter, Output} from "@angular/core";
 })
 export class HeaderComponent {
   collapsed = true;
-  @Output() page = new EventEmitter<string>();
 
-  onSelect(recipe: string) {
-    this.page.emit(recipe)
-  }
 }
