@@ -17,6 +17,6 @@ export class RecipeResolver implements Resolve<Recipe> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<Recipe> | Promise<Recipe> | Recipe {
-    return this.recipeService.getRecipe(+route.params['id']-1);
+    return this.recipeService.getRecipe(+route.params['id']);
   }
 }
