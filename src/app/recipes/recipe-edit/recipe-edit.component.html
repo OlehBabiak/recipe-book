@@ -40,10 +40,12 @@
       </div>
       <div class='row'>
         <div class='col-xs-12'>
-          <img *ngIf='imagePath.value'
+          <img
+            *ngIf='imagePath.value'
             [src]="imagePath.value"
             alt="preview image"
-            class='img-responsive'>
+            class='img-responsive'
+          >
         </div>
       </div>
       <div class='row'>
@@ -81,7 +83,12 @@
               >
             </div>
             <div class='col-xs-2'>
-              <button class='btn btn-danger'>X</button>
+              <button
+                class='btn btn-danger'
+                type='button'
+                (click)='onDeleteIngredient(i)'
+              >X
+              </button>
             </div>
           </div>
           <hr>
