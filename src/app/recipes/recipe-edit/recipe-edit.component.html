@@ -33,15 +33,16 @@
               formControlName='imagePath'
               type='text'
               class='form-control'
+              #imagePath
             >
           </div>
         </div>
       </div>
       <div class='row'>
         <div class='col-xs-12'>
-          <img *ngIf='recipeForm.valid'
-            [src]="recipeForm['imagePath']"
-            [alt]="recipeForm['name']"
+          <img *ngIf='imagePath.value'
+            [src]="imagePath.value"
+            alt="preview image"
             class='img-responsive'>
         </div>
       </div>
