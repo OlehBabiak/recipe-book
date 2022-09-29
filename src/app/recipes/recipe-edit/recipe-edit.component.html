@@ -39,7 +39,10 @@
       </div>
       <div class='row'>
         <div class='col-xs-12'>
-          <img src='' class='img-responsive'>
+          <img *ngIf='recipeForm.valid'
+            [src]="recipeForm['imagePath']"
+            [alt]="recipeForm['name']"
+            class='img-responsive'>
         </div>
       </div>
       <div class='row'>
