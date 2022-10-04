@@ -4,7 +4,7 @@ const router = require('express').Router();
 
 
 router.get('/', recipeController.getRecipes)
-router.post('/', recipeMiddleware.isRecipeValid, recipeController.createRecipe)
+router.put('/', recipeMiddleware.isRecipeValid, recipeController.createRecipe)
 
 
 module.exports = router

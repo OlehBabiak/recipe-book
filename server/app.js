@@ -30,8 +30,8 @@ const start = async () => {
     if (!fs.existsSync('src')) {
       await fs.mkdirSync('src');
     }
-    app.listen(8080, () => {
-      console.log('App listen 8080');
+    app.listen(8090, () => {
+      console.log('App listen 8090');
     });
   } catch (err) {
     console.error(`Error on server startup: ${ err.message }`);

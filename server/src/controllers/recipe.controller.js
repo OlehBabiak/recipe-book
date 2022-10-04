@@ -25,10 +25,11 @@ module.exports = {
 
   createRecipe: async ( req, res, next ) => {
     try {
-      const recipeData = req.body;
-      await RecipeDB.create(recipeData)
+      const {recipes} = req.body;
+      await RecipeDB.remove();
+      await RecipeDB.insertMany(recipes);
       res.status(200).json({
-        message: 'Recipe created successfully',
+        message: 'Recipes saved successfully',
       });
     } catch (e) {
       next(e)

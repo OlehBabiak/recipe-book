@@ -9,31 +9,38 @@ import {Subject} from "rxjs";
 })
 export class RecipeService {
   recipeChanged = new Subject<Recipe[]>()
-  private recipes: Recipe[] = [
-    new Recipe(
-      'A Testy Schnitzel',
-      'A super-tasty Schnitzel - just awesome!',
-      'https://e7.pngegg.com/pngimages/340/1021/png-clipart-schnitzel-schnitzel-thumbnail.png',
-      [
-        new Ingredient('Meat', 1),
-        new Ingredient('French Fries', 20)
-      ]
-    ),
-    new Recipe(
-      'Big fat Burger',
-      'What else you need to say?',
-      'https://cdn-cmjom.nitrocdn.com/FpMsHpAgoVrRMnuAdmBhGkyiizdsWlSU/assets/static/optimized/rev-a59bba9/wp-content/uploads/2015/07/king-burger-541x633.png',
-      [
-        new Ingredient('Buns', 2),
-        new Ingredient('Meat', 1)
-      ]
-    ),
-  ];
+  // private recipes: Recipe[] = [
+  //   new Recipe(
+  //     'A Testy Schnitzel',
+  //     'A super-tasty Schnitzel - just awesome!',
+  //     'https://e7.pngegg.com/pngimages/340/1021/png-clipart-schnitzel-schnitzel-thumbnail.png',
+  //     [
+  //       new Ingredient('Meat', 1),
+  //       new Ingredient('French Fries', 20)
+  //     ]
+  //   ),
+  //   new Recipe(
+  //     'Big fat Burger',
+  //     'What else you need to say?',
+  //     'https://cdn-cmjom.nitrocdn.com/FpMsHpAgoVrRMnuAdmBhGkyiizdsWlSU/assets/static/optimized/rev-a59bba9/wp-content/uploads/2015/07/king-burger-541x633.png',
+  //     [
+  //       new Ingredient('Buns', 2),
+  //       new Ingredient('Meat', 1)
+  //     ]
+  //   ),
+  // ];
+
+  private recipes: Recipe[] = [];
 
   // recipeSelectEmitter = new EventEmitter<Recipe>()
   recipeSelectEmitter = new Subject<Recipe>()
 
   constructor(private shopServ: ShoppingListService) {
+  }
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipeChanged.next(this.recipes.slice())
   }
 
   getRecipes() {
