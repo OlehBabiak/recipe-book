@@ -5,7 +5,7 @@ module.exports = {
     try {
       const {error} = await userValidator.createUser.validate(req.body);
       if (error) {
-        return res.status(400).json({message: `${ error.details[0].message }`})
+        return res.status(400).json({message: "Password or email is not valid!"})
       }
       next()
     } catch (e) {

@@ -1,6 +1,12 @@
 <div class="row">
   <div class="col-xs-12 col-md-6 col-md-offset-3">
-    <form [formGroup]='signupForm' (ngSubmit)='onSubmit()'>
+    <div class='alert alert-danger' *ngIf='error'>
+      <p>{{ error }}</p>
+    </div>
+    <div *ngIf='isLoading' style='text-align: center'>
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <form [formGroup]='signupForm' (ngSubmit)='onSubmit()' *ngIf='!isLoading'>
       <div class="form-group">
         <label for="email">E-Mail</label>
         <input
@@ -32,7 +38,9 @@
         >Password is not valid</span>
       </div>
       <div>
-        <button class="btn btn-primary" type='submit' [disabled]='!signupForm.valid'>{{ isLoginMode ? 'Login' : 'Sign Up' }}</button>
+        <button
+          class="btn btn-primary" type='submit' [disabled]='!signupForm.valid'
+        >{{ isLoginMode ? 'Login' : 'Sign Up' }}</button>
         |
         <button class="btn btn-primary" (click)='onSwitchMode()' type='button'>Switch
           to {{ isLoginMode ? 'Sign Up' : 'Login' }}</button>
@@ -40,3 +48,5 @@
     </form>
   </div>
 </div>
+
+

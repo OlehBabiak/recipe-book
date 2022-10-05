@@ -8,10 +8,12 @@ import {AuthService} from "../shared/auth.service";
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit{
+export class AuthComponent implements OnInit {
   signupForm: FormGroup;
-  isLoginMode = true
+  isLoginMode = true;
   submitted = false;
+  isLoading = false;
+  error: string = null;
 
   constructor(private authService: AuthService) {
   }
@@ -32,17 +34,33 @@ export class AuthComponent implements OnInit{
     if (!this.signupForm.valid) {
       return
     }
-    if(this.isLoginMode) {
-      this.authService.login(this.signupForm.value)
-        .subscribe(response => {
+    this.isLoading = true
+    if (this.isLoginMode) {
+      this.authService.login(this.signupForm.value).subscribe({
+        next: (response) => {
           console.log(response)
-        })
+          this.isLoading = false
+        },
+        error: ({error}) => {
+          console.log(error)
+          this.error = error.message
+          this.isLoading = false
+        }
+      })
       //login
-    }else {
+    } else {
       this.isLoginMode = true;
       this.authService.register(this.signupForm.value)
-        .subscribe(data => {
-          console.log(data)
+        .subscribe({
+          next: data => {
+            console.log('data', data)
+            this.isLoading = false
+          },
+          error: ({error}) => {
+            console.log('error', error)
+            this.error = error.message
+            this.isLoading = false
+          }
         })
       //register
     }
