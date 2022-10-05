@@ -5,7 +5,7 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
-const {recipeRouter} = require("./src/routes")
+const {recipeRouter, authRouter} = require("./src/routes/index")
 
 mongoose
   .connect("mongodb+srv://OlehBabiak:NdMCuYEdQLmMRpWc@cluster0.rg1g0ph.mongodb.net/recipe-book", {
@@ -24,6 +24,7 @@ app.use(express.json());
 app.use(morgan('tiny'));
 
 app.use('/api/recipes', recipeRouter)
+app.use('/api/auth', authRouter)
 
 const start = async () => {
   try {
