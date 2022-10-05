@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthModel} from "./auth.model";
-import {AuthService} from "../shared/auth.service";
+import {AuthResponseData, AuthService} from "../shared/auth.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-auth',
@@ -34,36 +35,31 @@ export class AuthComponent implements OnInit {
     if (!this.signupForm.valid) {
       return
     }
+
+    let authObs: Observable<AuthResponseData>
+
     this.isLoading = true
     if (this.isLoginMode) {
-      this.authService.login(this.signupForm.value).subscribe({
-        next: (response) => {
-          console.log(response)
-          this.isLoading = false
-        },
-        error: ({error}) => {
-          console.log(error)
-          this.error = error.message
-          this.isLoading = false
-        }
-      })
+      authObs = this.authService.login(this.signupForm.value)
       //login
     } else {
       this.isLoginMode = true;
-      this.authService.register(this.signupForm.value)
-        .subscribe({
-          next: data => {
-            console.log('data', data)
-            this.isLoading = false
-          },
-          error: ({error}) => {
-            console.log('error', error)
-            this.error = error.message
-            this.isLoading = false
-          }
-        })
+      authObs = this.authService.register(this.signupForm.value)
       //register
     }
+    authObs.subscribe({
+      next: data => {
+        console.log(data);
+        this.isLoading = false;
+        this.error = null
+      },
+      error: (errorMessage) => {
+        console.log(errorMessage);
+        this.error = errorMessage;
+        this.isLoading = false;
+      }
+    })
+
     this.signupForm.reset();
   }
 }

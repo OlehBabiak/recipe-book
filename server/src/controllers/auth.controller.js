@@ -43,7 +43,7 @@ module.exports = {
       }
       return res
         .status(400)
-        .json({message: 'Not authorized'})
+        .json({message: 'Not authorized! Check your authorize data!'})
     } catch (e) {
       next(e)
     }
