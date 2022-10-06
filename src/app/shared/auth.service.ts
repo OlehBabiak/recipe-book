@@ -42,6 +42,10 @@ export class AuthService {
         ))
   }
 
+  logout() {
+    this.user.next(null)
+  }
+
   private handleAuth(email: string, userId: string, token: string, refreshToken: string, expiresIn: number) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000)
     const user = new User(
