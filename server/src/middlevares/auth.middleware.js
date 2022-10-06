@@ -4,7 +4,6 @@ module.exports = {
   checkAccessToken: async ( req, res, next ) => {
     try {
       const token = req.get('authorization');
-      console.log('token', token)
       if (!token) {
         return res
           .status(401)
@@ -13,9 +12,6 @@ module.exports = {
       await authHelper.verifyToken(token);
 
       const tokenObj = await OAuth.findOne({jvt_token: token});
-      console.log('//////////////////')
-      console.log('tokenObj' , tokenObj)
-      console.log('////////////////////')
       if (!tokenObj) {
         return res
           .status(401)

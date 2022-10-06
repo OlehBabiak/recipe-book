@@ -17,29 +17,20 @@ export class DataStorageService {
     const recipes = this.recipeService.getRecipes();
     this.http.put('http://localhost:8090/api/recipes', {"recipes": recipes})
       .subscribe(response => {
-        console.log(response)
+        console.log('storeRecipes: ', response)
       })
   }
 
   fetchRecipes() {
-    //take(1) означає що мені треба взяти одне значення з observable і потім відразу відписатись
-    // другий параметр exhaustMap чекає коли перший observable завершиться, після цьго отримує цого user
-    // в exhaustMap ми повертаємо новий observable який замінює наш попередній observable
-    return this.authService.user.pipe(
-      take(1),
-      exhaustMap(user => {
-        console.log('user.in: ', user)
-        return this.http.get<{ 'recipes': Recipe[] }>('http://localhost:8090/api/recipes', {
-          headers: new HttpHeaders({'Authorization': user.token})
+
+    return this.http.get<{ 'recipes': Recipe[] }>('http://localhost:8090/api/recipes')
+      .pipe(
+        map(recipes => {
+          return recipes['recipes']
+        }),
+        tap(recipes => {//tap для того щоб виконати певний код без змін даних які проходять через observable
+          this.recipeService.setRecipes(recipes)
         })
-      }),
-      map(recipes => {
-        return recipes['recipes']
-      }),
-      tap(recipes => {//tap для того щоб виконати певний код без змін даних які проходять через observable
-        this.recipeService.setRecipes(recipes)
-        console.log(recipes)
-      })
-    )
+      )
   }
 }
