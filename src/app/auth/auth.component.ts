@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthModel} from "./auth.model";
 import {AuthResponseData, AuthService} from "../shared/auth.service";
 import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-auth',
@@ -15,6 +16,7 @@ export class AuthComponent implements OnInit {
   submitted = false;
   isLoading = false;
   error: string = null;
+  userCreateMessage: string = null
 
   constructor(private authService: AuthService) {
   }
@@ -45,11 +47,11 @@ export class AuthComponent implements OnInit {
     } else {
       this.isLoginMode = true;
       authObs = this.authService.register(this.signupForm.value)
+      this.userCreateMessage = "User was created successfully!"
       //register
     }
     authObs.subscribe({
       next: data => {
-        console.log(data);
         this.isLoading = false;
         this.error = null
       },
@@ -61,5 +63,9 @@ export class AuthComponent implements OnInit {
     })
 
     this.signupForm.reset();
+  }
+
+  closeAlert() {
+    this.userCreateMessage = null
   }
 }
