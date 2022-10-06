@@ -11,7 +11,8 @@ export interface AuthResponseData {
   refresh_token: string
   id: string,
   email: string,
-  expiresIn: string
+  expiresIn: string,
+  expiresInRefresh: string
 }
 
 @Injectable({
@@ -20,6 +21,7 @@ export interface AuthResponseData {
 export class AuthService {
 
   user = new BehaviorSubject<User>(null)
+  private tokenExpirationTimer: any
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -35,27 +37,77 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap(
-          ({email, id, jwt_token, refresh_token, expiresIn}) => {
-            this.handleAuth(email, id, jwt_token, refresh_token, +expiresIn)
+          ({email, id, jwt_token, refresh_token, expiresIn, expiresInRefresh}) => {
+            this.handleAuth(email, id, jwt_token, refresh_token, +expiresIn, +expiresInRefresh)
             this.router.navigate(["./recipes"])
           }
         ))
   }
 
   logout() {
-    this.user.next(null)
+    this.user.next(null);
+    this.router.navigate(["./auth"]);
+    localStorage.removeItem('userData');
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
   }
 
-  private handleAuth(email: string, userId: string, token: string, refreshToken: string, expiresIn: number) {
+  autoLogout(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration)
+  }
+
+  autologin() {
+    const userData: {
+      email: string
+      id: string
+      _token: string
+      _refresh_token: string
+      _tokenExpirationDate: string;
+      _refreshTokenExpirationDate: string
+    } = JSON.parse(localStorage.getItem("userData"));
+    if (!userData) {
+      return
+    }
+    const loadedUserFromLS = new User(
+      userData.email,
+      userData.id,
+      userData._token,
+      userData._refresh_token,
+      new Date(userData._tokenExpirationDate),
+      new Date(userData._refreshTokenExpirationDate)
+    );
+    //Перевіряємо чи наш токен ще активний, якщо так то активуємо юзера
+    if (loadedUserFromLS.token) {
+      const expirationTime = new Date(userData._refreshTokenExpirationDate).getTime() - new Date().getTime()
+      this.autoLogout(expirationTime)
+      this.user.next(loadedUserFromLS)
+    }
+  }
+
+  private handleAuth(
+    email: string,
+    userId: string,
+    token: string,
+    refreshToken: string,
+    expiresIn: number,
+    refreshExpiresIn: number) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000)
+    const refreshExpirationDate = new Date(new Date().getTime() + refreshExpiresIn * 1000)
     const user = new User(
       email,
       userId,
       token,
       refreshToken,
-      expirationDate
+      expirationDate,
+      refreshExpirationDate
     );
-    this.user.next(user)
+    this.user.next(user);
+    this.autoLogout(refreshExpiresIn * 1000)
+    localStorage.setItem('userData', JSON.stringify(user))
   }
 
   private handleError(errorRes: HttpErrorResponse) {

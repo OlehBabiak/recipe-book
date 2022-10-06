@@ -39,7 +39,8 @@ module.exports = {
             jwt_token: tokenPair.jwt_token,
             refresh_token: tokenPair.refresh_token,
             id: user._id,
-            expiresIn: '1200',
+            expiresIn: '120',
+            expiresInRefresh: '300',
             email: user.email
           });
       }
