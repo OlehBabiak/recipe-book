@@ -1,34 +1,34 @@
-const {Schema, model} = require('mongoose')
+const { Schema, model } = require('mongoose');
 
 const recipeSchema = new Schema(
   {
     _id: {
       type: String,
-      require: false
+      require: false,
     },
     __v: {
       type: Number,
-      require: false
+      require: false,
     },
     name: {
       type: String,
-      require: true
+      require: true,
     },
     description: {
       type: String,
-      require: true
+      require: true,
     },
     imagePath: {
       type: String,
-      require: true
+      require: true,
     },
     ingredients: [
       {
         name: String,
-        amount: Number
-      }
+        amount: Number,
+      },
     ],
   },
 );
 
-module.exports = model('Recipes', recipeSchema)
+module.exports = model('Recipes', recipeSchema);

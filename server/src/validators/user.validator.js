@@ -1,6 +1,5 @@
 const Joi = require('joi');
-const emailRegexp = require("./email.regexp");
-
+const emailRegexp = require('./email.regexp');
 
 module.exports = {
   createUser: Joi.object().keys({
@@ -12,4 +11,3 @@ module.exports = {
     email: Joi.string().regex(emailRegexp.EMAIL_REGEXP).required(),
   }),
 };
-

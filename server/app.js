@@ -1,30 +1,31 @@
 const fs = require('fs');
 const express = require('express');
-const morgan = require('morgan')
+const morgan = require('morgan');
+
 const app = express();
-const cors = require("cors");
-const mongoose = require("mongoose");
-const path = require("path");
-const {recipeRouter, authRouter} = require("./src/routes/index")
+const cors = require('cors');
+const mongoose = require('mongoose');
+const path = require('path');
+const { recipeRouter, authRouter } = require('./src/routes/index');
 
 mongoose
-  .connect("mongodb+srv://OlehBabiak:NdMCuYEdQLmMRpWc@cluster0.rg1g0ph.mongodb.net/recipe-book", {
+  .connect('mongodb+srv://OlehBabiak:NdMCuYEdQLmMRpWc@cluster0.rg1g0ph.mongodb.net/recipe-book', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("connection is successfull");
+    console.log('connection is successfull');
   })
-  .catch(( e ) => {
-    console.log("no connection ");
+  .catch((e) => {
+    console.log('no connection ');
   });
 
 app.use(cors());
 app.use(express.json());
 app.use(morgan('tiny'));
 
-app.use('/api/recipes', recipeRouter)
-app.use('/api/auth', authRouter)
+app.use('/api/recipes', recipeRouter);
+app.use('/api/auth', authRouter);
 
 const start = async () => {
   try {
@@ -35,8 +36,8 @@ const start = async () => {
       console.log('App listen 8090');
     });
   } catch (err) {
-    console.error(`Error on server startup: ${ err.message }`);
+    console.error(`Error on server startup: ${err.message}`);
   }
 };
 
-start()
+start();

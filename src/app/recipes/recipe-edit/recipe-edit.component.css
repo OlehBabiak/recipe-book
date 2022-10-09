@@ -7,3 +7,9 @@ textarea.ng-invalid.ng-touched
 {
   border: 1px solid red
 }
+
+input.ng-dirty,
+textarea.ng-dirty
+{
+  border: none;
+}

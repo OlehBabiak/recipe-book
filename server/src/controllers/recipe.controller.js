@@ -1,62 +1,63 @@
-const {RecipeDB} = require("../dataBase");
+const { RecipeDB } = require('../dataBase');
+
 module.exports = {
 
-  getRecipes: async ( req, res, next ) => {
+  getRecipes: async (req, res, next) => {
     try {
       const recipes = await RecipeDB.find();
       return res.status(200).json({
-        recipes
-      })
+        recipes,
+      });
     } catch (e) {
-      next(e)
+      next(e);
     }
   },
 
-  deleteRecipe: async ( req, res, next ) => {
+  deleteRecipe: async (req, res, next) => {
     try {
       await RecipeDB.remove();
       return res.status(200).json({
         message: 'Recipe were deleted',
       });
     } catch (e) {
-      next(e)
+      next(e);
     }
   },
 
-  createRecipe: async ( req, res, next ) => {
+  createRecipe: async (req, res, next) => {
     try {
-      const {recipes} = req.body;
+      const { recipes } = req.body;
       await RecipeDB.remove();
       await RecipeDB.insertMany(recipes);
       res.status(200).json({
         message: 'Recipes saved successfully',
       });
     } catch (e) {
-      next(e)
+      next(e);
     }
   },
 
-  getRecipeById: async ( req, res, next ) => {
+  getRecipeById: async (req, res, next) => {
     try {
 
     } catch (e) {
-      next(e)
+      next(e);
     }
   },
 
-  updateRecipeById: async ( req, res, next ) => {
+  updateRecipeById: async (req, res, next) => {
     try {
 
     } catch (e) {
-      next(e)
+      next(e);
     }
   },
 
-  deleteRecipeById: async ( req, res, next ) => {
+  deleteRecipeById: async (req, res, next) => {
     try {
 
     } catch (e) {
-      next(e)
+      next(e);
     }
-  }
-}
+  },
+};
