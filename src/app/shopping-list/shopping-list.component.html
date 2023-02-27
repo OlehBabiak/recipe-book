@@ -17,4 +17,18 @@
       </a>
     </ul>
   </div>
+  <google-map
+    height="400px"
+    width="750px"
+    [center]="center"
+    [zoom]="zoom"
+    (mapClick)="moveMap($event)"
+    (mapMousemove)="move($event)"
+  >
+    <map-marker
+      [position]='markerPositions'
+      [options]=''
+    >
+    </map-marker>
+  </google-map>
 </div>

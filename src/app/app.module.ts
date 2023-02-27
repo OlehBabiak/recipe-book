@@ -4,21 +4,18 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {HeaderComponent} from "./header/header.component";
-import {RecipesComponent} from './recipes/recipes.component';
-import {RecipeListComponent} from './recipes/recipe-list/recipe-list.component';
-import {RecipeDetailComponent} from './recipes/recipe-detail/recipe-detail.component';
-import {RecipeItemComponent} from './recipes/recipe-list/recipe-item/recipe-item.component';
 import {ShoppingListComponent} from './shopping-list/shopping-list.component';
 import {ShoppingEditComponent} from './shopping-list/shopping-edit/shopping-edit.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DropdownDirective} from './shared/dropdown.directive';
 import {RouterLinkWithHref, RouterOutlet} from "@angular/router";
 import {AppRoutingModule} from "./app-routing/app-routing.module";
-import {RecipeStartComponent} from './recipes/recipe-start/recipe-start.component';
-import {RecipeEditComponent} from './recipes/recipe-edit/recipe-edit.component';
 import {AuthComponent} from "./auth/auth.component";
 import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner/loading-spinner.component';
 import {AuthInterceptor} from "./auth/auth.interceptor";
+import {GoogleMapsModule} from '@angular/google-maps'
+import {RecipeModule} from "./recipes/recipe/recipe.module";
+import {SharedModule} from "./shared/shared.module";
 
 
 @NgModule({
@@ -26,27 +23,24 @@ import {AuthInterceptor} from "./auth/auth.interceptor";
     AppComponent,
     AuthComponent,
     HeaderComponent,
-    RecipesComponent,
-    RecipeListComponent,
-    RecipeDetailComponent,
-    RecipeItemComponent,
     ShoppingListComponent,
     ShoppingEditComponent,
-    DropdownDirective,
-    RecipeStartComponent,
-    RecipeEditComponent,
     LoadingSpinnerComponent
   ],
   imports: [
+    AppRoutingModule,
+    RecipeModule,
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     RouterOutlet,
     RouterLinkWithHref,
-    HttpClientModule,
-    AppRoutingModule
+    GoogleMapsModule,
+    SharedModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

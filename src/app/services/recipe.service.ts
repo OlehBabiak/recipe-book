@@ -9,6 +9,7 @@ import {DataStorageService} from "../shared/data-storage.service";
   providedIn: "root"
 })
 export class RecipeService {
+
   recipeChanged = new Subject<Recipe[]>()
   // private recipes: Recipe[] = [
   //   new Recipe(

@@ -6,7 +6,6 @@ module.exports = {
   register: async ( req, res, next ) => {
     try {
       const userData = req.body;
-      console.log(userData);
       userData.password = await passwordHasher.hashPass(userData.password);
       userData.created_date = await new Date();
       userData.email = req.body.email.toLowerCase();
